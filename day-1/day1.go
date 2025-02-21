@@ -46,6 +46,8 @@ func readInput() (left_column, right_column []int) {
 	right_column = make([]int, 0)
 
 	for _, line := range readLines("input.txt") {
+		// strings.Fields parses the string and returns a slice
+		// containing all elements between whitespaces/tabs/etc
 		fields := strings.Fields(line)
 
 		// converts string to int
@@ -65,10 +67,7 @@ func readInput() (left_column, right_column []int) {
 func main() {
 	log.Println("hello world")
 
-	left := []int{3, 4, 2, 1, 3, 3}
-	right := []int{4, 3, 5, 3, 9, 3}
-
-	left, right = readInput()
+	left, right := readInput()
 
 	slices.Sort(left)
 	slices.Sort(right)
