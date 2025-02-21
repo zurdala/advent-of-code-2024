@@ -1,15 +1,44 @@
 package main
 
+// https://adventofcode.com/2024/day/1
+
 import (
+	"bufio"
 	"fmt"
 	m "math"
+	"os"
 	"slices"
+	"strconv"
+	"strings"
 )
 
-func readInput() (l, r []int) {
+func check(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
+
+func readInput() (left_column, right_column []int) {
 	// read file input.txt and return 2 slices with the left and right columns
-	l = []int{0}
-	r = []int{0}
+	left_column = make([]int, 0)
+	right_column = make([]int, 0)
+
+	inputFile, err := os.Open("input.txt")
+	check(err)
+
+	fileScanner := bufio.NewScanner(inputFile)
+	fileScanner.Split(bufio.ScanLines)
+
+	for fileScanner.Scan() {
+		line := fileScanner.Text()
+		fields := strings.Fields(line)
+		l, err := strconv.Atoi(fields[0])
+		check(err)
+		r, err := strconv.Atoi(fields[1])
+		check(err)
+		left_column = append(left_column, l)
+		right_column = append(right_column, r)
+	}
 
 	return
 }
@@ -34,10 +63,10 @@ func main() {
 	fmt.Println(distance)
 
 	sum := 0
-	for i := 0; i < len(distance); i++ {
+	for i := range len(distance) {
 		sum += distance[i]
 	}
 
-	fmt.Println("The total value is ", sum)
+	fmt.Println("The total value is ", sum) // result: 2285373
 
 }
