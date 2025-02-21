@@ -4,8 +4,7 @@ package main
 
 import (
 	"bufio"
-	"fmt"
-	m "math"
+	"log"
 	"os"
 	"slices"
 	"strconv"
@@ -14,15 +13,21 @@ import (
 
 func check(e error) {
 	if e != nil {
-		panic(e)
+		log.Fatalln(e)
 	}
 }
 
-func readInput() (left_column, right_column []int) {
-	// read file input.txt and return 2 slices with the left and right columns
-	left_column = make([]int, 0)
-	right_column = make([]int, 0)
+// there is a missing abs function for ints in the stdlib
+// or at least, I haven't found it
+func absInt(i int) int {
+	if i < 0 {
+		i = -i
+	}
+	return i
+}
 
+func readLines(fname string) (lines []string) {
+	log.Println("Reading lines of ", fname)
 	inputFile, err := os.Open("input.txt")
 	check(err)
 
@@ -30,12 +35,26 @@ func readInput() (left_column, right_column []int) {
 	fileScanner.Split(bufio.ScanLines)
 
 	for fileScanner.Scan() {
-		line := fileScanner.Text()
+		lines = append(lines, fileScanner.Text())
+	}
+	return
+}
+
+func readInput() (left_column, right_column []int) {
+	// read file input.txt and return 2 slices with the left and right columns
+	left_column = make([]int, 0)
+	right_column = make([]int, 0)
+
+	for _, line := range readLines("input.txt") {
 		fields := strings.Fields(line)
+
+		// converts string to int
 		l, err := strconv.Atoi(fields[0])
 		check(err)
 		r, err := strconv.Atoi(fields[1])
 		check(err)
+
+		// append returns a new slice
 		left_column = append(left_column, l)
 		right_column = append(right_column, r)
 	}
@@ -44,7 +63,7 @@ func readInput() (left_column, right_column []int) {
 }
 
 func main() {
-	fmt.Println("hello world")
+	log.Println("hello world")
 
 	left := []int{3, 4, 2, 1, 3, 3}
 	right := []int{4, 3, 5, 3, 9, 3}
@@ -57,16 +76,14 @@ func main() {
 	var distance []int
 
 	for i := 0; i < len(left); i++ {
-		distance = append(distance, int(m.Abs(float64(left[i]-right[i]))))
+		distance = append(distance, absInt(left[i]-right[i]))
 	}
-
-	fmt.Println(distance)
 
 	sum := 0
-	for i := range len(distance) {
-		sum += distance[i]
+	for _, d := range distance {
+		sum += d
 	}
 
-	fmt.Println("The total value is ", sum) // result: 2285373
+	log.Println("The total value is ", sum) // result: 2285373
 
 }
