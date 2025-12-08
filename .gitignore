@@ -1,5 +1,38 @@
 .idea
+**/build
+**/.cache
+
+# Created by https://www.toptal.com/developers/gitignore/api/kdevelop4,ninja,cmake
+# Edit at https://www.toptal.com/developers/gitignore?templates=kdevelop4,ninja,cmake
+
+### CMake ###
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+
+### CMake Patch ###
+CMakeUserPresets.json
+
+# External projects
+*-prefix/
+
+### KDevelop4 ###
 *.kdev4
+.kdev4/
+
+### Ninja ###
+.ninja_deps
+.ninja_log
+
+# End of https://www.toptal.com/developers/gitignore/api/kdevelop4,ninja,cmake
 
 # If you prefer the allow list template instead of the deny list, see community template:
 # https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
